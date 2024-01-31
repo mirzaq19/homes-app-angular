@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { HousingLocationComponent } from "../housing-location/housing-location.component";
 import { HousingLocation } from "../housing-location";
 import { HousingService } from "../housing.service";
-import { $ } from "protractor";
 
 @Component({
   selector: "app-home",
@@ -11,7 +10,7 @@ import { $ } from "protractor";
   imports: [CommonModule, HousingLocationComponent],
   template: `
     <section>
-      <form (submit)="$event.preventDefault(); submitFilter(filter.value)">
+      <form (submit)="submitFilter(filter.value, $event)">
         <input type="text" placeholder="Filter by city" #filter />
         <button
           class="primary"
@@ -54,7 +53,8 @@ export class HomeComponent {
     );
   }
 
-  submitFilter(text: string) {
+  submitFilter(text: string, e: Event) {
+    e.preventDefault();
     this.filterResults(text);
   }
 }
